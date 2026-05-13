@@ -23,8 +23,6 @@ module "eks" {
   vpc_id             = module.networking.vpc_id
   private_subnets    = module.networking.private_subnets
   admin_role_arn     = module.iam.account_wide_assumable_role_arn
-  aws_region         = var.aws_region
-  output_path        = "${path.module}/manifests"
 }
 
 # --- Karpenter Module -------------------------------------------------------------

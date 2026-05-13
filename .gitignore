@@ -19,7 +19,6 @@ override.tf.json
 .terraform/
 
 # Kubernetes and secrets
-kubeconfig.yaml
 *.kubeconfig
 karpenter-values.yaml
 

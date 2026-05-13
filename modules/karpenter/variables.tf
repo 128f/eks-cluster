@@ -46,3 +46,9 @@ variable "apps_capacity_limits" {
     memory = "200Gi"
   }
 }
+
+variable "gpu_capacity_limit" {
+  description = "Maximum total nvidia.com/gpu across the gpu NodePool. Karpenter will not provision past this."
+  type        = number
+  default     = 8
+}

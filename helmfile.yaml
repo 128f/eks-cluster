@@ -4,15 +4,14 @@ repositories:
     url: https://nvidia.github.io/k8s-device-plugin
 
 releases:
-  # 1) CRDs (install-once, then left in place)
+  # CRDs - bump `version` deliberately; CRD upgrades sometimes need manual migration
   - name: karpenter-crd
     namespace: karpenter
     createNamespace: true
     chart: oci://public.ecr.aws/karpenter/karpenter-crd
     version: "1.6.1"
-    installed: true
 
-  # 2) Controller
+  # Controller
   - name: karpenter
     namespace: karpenter
     chart: oci://public.ecr.aws/karpenter/karpenter

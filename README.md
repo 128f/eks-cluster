@@ -17,15 +17,25 @@ terraform apply
 This creates a VPC, the EKS control plane, and the Karpenter IAM/SQS resources.
 It also writes the following files into `manifests/`:
 
-- `kubeconfig.yaml` — kubeconfig pointing at the new cluster
 - `karpenter-values.yaml` — values consumed by `helmfile.yaml`
 - `ec2-node-classes.yaml`, `node-pools.yaml` — Karpenter CRs applied in step 3
+
+Once apply finishes, point kubectl at the new cluster:
+
+```sh
+aws eks update-kubeconfig \
+  --region us-east-1 \
+  --name "$(terraform output -raw cluster_name)" \
+  --role-arn "$(terraform output -raw admin_role_arn)"
+```
+
+Cluster access is gated on assuming the admin role created by the `iam`
+module — anyone in the same AWS account can assume it.
 
 ## 2. Install core services
 
 ```sh
 helm plugin install https://github.com/databus23/helm-diff
-export KUBECONFIG=./manifests/kubeconfig.yaml
 helmfile apply
 ```
 

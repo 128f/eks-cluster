@@ -38,8 +38,3 @@ output "vpc_id" {
   description = "ID of the VPC"
   value       = module.networking.vpc_id
 }
-
-output "kubeconfig_file" {
-  description = "Path to the generated kubeconfig file"
-  value       = module.karpenter.kubeconfig_file
-}

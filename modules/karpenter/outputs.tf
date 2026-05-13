@@ -12,8 +12,3 @@ output "karpenter_values_file" {
   description = "Path to the generated Karpenter values file"
   value       = local_file.karpenter_values.filename
 }
-
-output "kubeconfig_file" {
-  description = "Path to the generated kubeconfig file"
-  value       = local_file.kubeconfig.filename
-}

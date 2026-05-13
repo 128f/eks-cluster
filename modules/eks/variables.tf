@@ -22,13 +22,3 @@ variable "admin_role_arn" {
   description = "ARN of the admin role for cluster access"
   type        = string
 }
-
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-}
-
-variable "output_path" {
-  description = "Path for output files"
-  type        = string
-}

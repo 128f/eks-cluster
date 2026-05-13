@@ -6,7 +6,7 @@ module "karpenter" {
 
   # Name needs to match role name passed to the EC2NodeClass
   node_iam_role_use_name_prefix = false
-  node_iam_role_name            = "karpenter"
+  node_iam_role_name            = "${var.cluster_name}-karpenter-node"
   namespace                     = "karpenter"
 
   # Used to attach additional IAM policies to the Karpenter node IAM role
@@ -48,7 +48,7 @@ metadata:
   name: al2023-standard
 spec:
   amiFamily: AL2023
-  role: karpenter
+  role: ${var.cluster_name}-karpenter-node
   amiSelectorTerms:
     - alias: al2023@v20250813
   subnetSelectorTerms:
@@ -66,9 +66,10 @@ metadata:
   name: al2023-gpu
 spec:
   amiFamily: AL2023
-  role: karpenter
+  role: ${var.cluster_name}-karpenter-node
   amiSelectorTerms:
     - name: "*amazon-eks-gpu*" # EKS-optimized accelerated AMI
+      owner: "amazon"
   subnetSelectorTerms:
     - tags:
         karpenter.sh/discovery: ${var.cluster_name}-private
@@ -107,10 +108,6 @@ spec:
         - key: karpenter.sh/capacity-type
           operator: In
           values: ["spot","on-demand"]
-      taints:
-        - key: workload
-          value: apps
-          effect: NoSchedule
   limits:
     cpu: ${var.apps_capacity_limits.cpu}
     memory: ${var.apps_capacity_limits.memory}
@@ -123,6 +120,8 @@ kind: NodePool
 metadata:
   name: gpu
 spec:
+  limits:
+    nvidia.com/gpu: ${var.gpu_capacity_limit}
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized
     consolidateAfter: 30s
