@@ -22,7 +22,7 @@ module "eks" {
   kubernetes_version = var.kubernetes_version
   vpc_id             = module.networking.vpc_id
   private_subnets    = module.networking.private_subnets
-  admin_role_arn     = module.iam.account_wide_assumable_role_arn
+  admin_role_arn     = module.iam.admin_role_arn
 }
 
 # --- Karpenter Module -------------------------------------------------------------

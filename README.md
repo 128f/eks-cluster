@@ -5,8 +5,10 @@ Karpenter-managed CPU and GPU node pools. Three steps to a working cluster.
 
 > **Heads up:** the cluster is configured with `endpoint_public_access = true`,
 > so the Kubernetes API is reachable from the internet (auth still required).
-> Review `modules/eks/main.tf` and `modules/karpenter/variables.tf` before
-> applying in any account you care about.
+> The VPC also uses `single_nat_gateway = true` — cost-friendly for a solo
+> project, but a single point of failure for anything production. Review
+> `modules/eks/main.tf` and `modules/karpenter/variables.tf` before applying
+> in any account you care about.
 
 ## 1. Bring up the base infra
 

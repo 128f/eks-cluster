@@ -6,7 +6,7 @@ output "cluster_name" {
 
 output "admin_role_arn" {
   description = "ARN of the admin role granted EKS cluster admin access"
-  value       = module.iam.account_wide_assumable_role_arn
+  value       = module.iam.admin_role_arn
 }
 
 output "cluster_endpoint" {
@@ -27,6 +27,16 @@ output "oidc_provider_arn" {
 output "node_iam_role_name" {
   description = "The name of the Karpenter node IAM role"
   value       = module.karpenter.node_iam_role_name
+}
+
+output "karpenter_queue_name" {
+  description = "Name of the Karpenter interruption SQS queue"
+  value       = module.karpenter.queue_name
+}
+
+output "karpenter_values_file" {
+  description = "Path to the generated Karpenter Helm values file"
+  value       = module.karpenter.karpenter_values_file
 }
 
 output "private_subnet_ids" {
