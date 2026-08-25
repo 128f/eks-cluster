@@ -65,8 +65,40 @@ module "eks" {
     eks-pod-identity-agent = { before_compute = true }
     vpc-cni                = { before_compute = true }
     kube-proxy             = {}
+    aws-ebs-csi-driver = {
+      pod_identity_association = [{
+        role_arn        = aws_iam_role.ebs_csi_driver.arn
+        service_account = "ebs-csi-controller-sa"
+      }]
+    }
   }
 
   # Tag subnets / SG for Karpenter auto-discovery
   tags = { "karpenter.sh/discovery" = var.cluster_name }
+}
+
+# --- EBS CSI driver IAM role, granted via EKS Pod Identity -------------------
+resource "aws_iam_role" "ebs_csi_driver" {
+  name = "${var.cluster_name}-ebs-csi-driver"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "pods.eks.amazonaws.com"
+        },
+        Action = [
+          "sts:AssumeRole",
+          "sts:TagSession"
+        ]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ebs_csi_driver" {
+  role       = aws_iam_role.ebs_csi_driver.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 }
