@@ -27,12 +27,12 @@ module "eks" {
 }
 
 # --- Karpenter Module -------------------------------------------------------------
-module "karpenter" {
-  source = "./modules/karpenter"
-
-  cluster_name                       = module.eks.cluster_name
-  cluster_endpoint                   = module.eks.cluster_endpoint
-  cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
-  aws_region                         = var.aws_region
-  output_path                        = "${path.module}/manifests"
-}
+# module "karpenter" {
+#   source = "./modules/karpenter"
+#
+#   cluster_name                       = module.eks.cluster_name
+#   cluster_endpoint                   = module.eks.cluster_endpoint
+#   cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
+#   aws_region                         = var.aws_region
+#   output_path                        = "${path.module}/manifests"
+# }
