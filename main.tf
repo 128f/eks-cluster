@@ -18,11 +18,12 @@ module "networking" {
 module "eks" {
   source = "./modules/eks"
 
-  cluster_name       = var.cluster_name
-  kubernetes_version = var.kubernetes_version
-  vpc_id             = module.networking.vpc_id
-  private_subnets    = module.networking.private_subnets
-  admin_role_arn     = module.iam.admin_role_arn
+  cluster_name                = var.cluster_name
+  kubernetes_version          = var.kubernetes_version
+  vpc_id                      = module.networking.vpc_id
+  private_subnets             = module.networking.private_subnets
+  admin_role_arn              = module.iam.admin_role_arn
+  create_cloudwatch_log_group = var.create_cloudwatch_log_group
 }
 
 # --- Karpenter Module -------------------------------------------------------------

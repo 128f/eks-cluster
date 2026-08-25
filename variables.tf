@@ -27,3 +27,9 @@ variable "kubernetes_version" {
   type        = string
   default     = "1.30"
 }
+
+variable "create_cloudwatch_log_group" {
+  description = "Whether to create the CloudWatch log group for the EKS cluster (set to false if it already exists)"
+  type        = bool
+  default     = false
+}

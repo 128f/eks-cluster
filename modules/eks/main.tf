@@ -9,7 +9,9 @@ module "eks" {
   vpc_id     = var.vpc_id
   subnet_ids = var.private_subnets
 
-  authentication_mode = "API_AND_CONFIG_MAP"
+  create_cloudwatch_log_group = var.create_cloudwatch_log_group
+
+  authentication_mode = "API"
 
   endpoint_public_access = true
 
@@ -21,7 +23,7 @@ module "eks" {
 
       min_size     = 1
       max_size     = 3
-      desired_size = 2
+      desired_size = 3
 
       labels = {
         # Used to ensure Karpenter runs on nodes that it does not manage

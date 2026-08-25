@@ -22,3 +22,9 @@ variable "admin_role_arn" {
   description = "ARN of the admin role for cluster access"
   type        = string
 }
+
+variable "create_cloudwatch_log_group" {
+  description = "Whether to create the CloudWatch log group for the EKS cluster (set to false if it already exists)"
+  type        = bool
+  default     = true
+}
