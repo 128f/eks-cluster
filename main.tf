@@ -35,8 +35,19 @@ module "eks" {
   private_subnets             = module.networking.private_subnets
   admin_role_arn              = module.iam.admin_role_arn
   deploy_role_arn             = module.iam.deploy_role_arn
-  deploy_namespace            = "otel-demo"
+  deploy_namespace            = var.deploy_namespace
   create_cloudwatch_log_group = var.create_cloudwatch_log_group
+}
+
+# --- App namespace ------------------------------------------------------------
+# Created here (via the admin access entry) because the GitHub Actions deploy
+# role is namespace-scoped and cannot create Namespace objects itself.
+resource "kubernetes_namespace" "app" {
+  metadata {
+    name = var.deploy_namespace
+  }
+
+  depends_on = [module.eks]
 }
 
 # --- Karpenter Module -------------------------------------------------------------

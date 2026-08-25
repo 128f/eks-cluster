@@ -52,6 +52,12 @@ variable "github_repository_owner_id" {
   default     = "60494319"
 }
 
+variable "deploy_namespace" {
+  description = "Namespace the GitHub Actions deploy role is scoped to and that Terraform pre-creates"
+  type        = string
+  default     = "otel-demo"
+}
+
 variable "ecr_repository_name" {
   description = "Name of the ECR repository for the opentelemetry-demo-app image"
   type        = string
