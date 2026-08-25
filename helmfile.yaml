@@ -2,15 +2,23 @@
 repositories:
   # - name: nvdp
   #   url: https://nvidia.github.io/k8s-device-plugin
-  - name: traefik
-    url: https://traefik.github.io/charts
+  - name: eks-charts
+    url: https://aws.github.io/eks-charts
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
 
 releases:
 
-  - name: traefik
-    namespace: traefik
+  - name: aws-load-balancer-controller
+    namespace: kube-system
+    chart: eks-charts/aws-load-balancer-controller
+    values:
+      - manifests/aws-load-balancer-controller-values.yaml
+
+  - name: kube-prometheus-stack
+    namespace: monitoring
     createNamespace: true
-    chart: traefik/traefik
+    chart: prometheus-community/kube-prometheus-stack
 
 
 

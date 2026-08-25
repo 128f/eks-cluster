@@ -39,6 +39,18 @@ module "eks" {
   create_cloudwatch_log_group = var.create_cloudwatch_log_group
 }
 
+# --- AWS Load Balancer Controller Module -------------------------------------
+module "aws_lb_controller" {
+  source = "./modules/aws-lb-controller"
+
+  cluster_name = var.cluster_name
+  aws_region   = var.aws_region
+  vpc_id       = module.networking.vpc_id
+  output_path  = "${path.module}/manifests"
+
+  depends_on = [module.eks]
+}
+
 # --- App namespace ------------------------------------------------------------
 # Created here (via the admin access entry) because the GitHub Actions deploy
 # role is namespace-scoped and cannot create Namespace objects itself.

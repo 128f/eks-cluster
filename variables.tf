@@ -25,7 +25,7 @@ variable "availability_zones" {
 variable "kubernetes_version" {
   description = "Kubernetes version for the EKS cluster"
   type        = string
-  default     = "1.30"
+  default     = "1.31"
 }
 
 variable "create_cloudwatch_log_group" {
