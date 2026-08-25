@@ -9,6 +9,16 @@ output "admin_role_arn" {
   value       = module.iam.admin_role_arn
 }
 
+output "deploy_role_arn" {
+  description = "ARN of the GitHub Actions deploy role"
+  value       = module.iam.deploy_role_arn
+}
+
+output "ecr_repository_url" {
+  description = "URL of the ECR repository for the opentelemetry-demo-app image"
+  value       = module.ecr.repository_url
+}
+
 output "cluster_endpoint" {
   description = "Endpoint for EKS control plane"
   value       = module.eks.cluster_endpoint

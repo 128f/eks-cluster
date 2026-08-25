@@ -2,7 +2,18 @@
 module "iam" {
   source = "./modules/iam"
 
-  cluster_name = var.cluster_name
+  cluster_name               = var.cluster_name
+  github_repo                = var.github_repo
+  github_repository_id       = var.github_repository_id
+  github_repository_owner_id = var.github_repository_owner_id
+}
+
+# --- ECR Module -------------------------------------------------------------
+module "ecr" {
+  source = "./modules/ecr"
+
+  repository_name  = var.ecr_repository_name
+  deploy_role_name = module.iam.deploy_role_name
 }
 
 # --- Networking Module -------------------------------------------------------------
@@ -23,6 +34,8 @@ module "eks" {
   vpc_id                      = module.networking.vpc_id
   private_subnets             = module.networking.private_subnets
   admin_role_arn              = module.iam.admin_role_arn
+  deploy_role_arn             = module.iam.deploy_role_arn
+  deploy_namespace            = "otel-demo"
   create_cloudwatch_log_group = var.create_cloudwatch_log_group
 }
 

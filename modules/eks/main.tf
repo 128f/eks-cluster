@@ -44,6 +44,19 @@ module "eks" {
         }
       }
     }
+
+    deploy = {
+      principal_arn = var.deploy_role_arn
+      policy_associations = {
+        edit = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSEditPolicy"
+          access_scope = {
+            type       = "namespace"
+            namespaces = [var.deploy_namespace]
+          }
+        }
+      }
+    }
   }
 
   # Addons required by Karpenter

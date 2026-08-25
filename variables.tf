@@ -33,3 +33,27 @@ variable "create_cloudwatch_log_group" {
   type        = bool
   default     = false
 }
+
+variable "github_repo" {
+  description = "GitHub repository allowed to assume the deploy role (e.g. org/repo)"
+  type        = string
+  default     = "128f/opentelemetry-demo-app"
+}
+
+variable "github_repository_id" {
+  description = "Immutable numeric ID of the GitHub repository allowed to assume the deploy role"
+  type        = string
+  default     = "1346431261"
+}
+
+variable "github_repository_owner_id" {
+  description = "Immutable numeric ID of the GitHub repository owner allowed to assume the deploy role"
+  type        = string
+  default     = "60494319"
+}
+
+variable "ecr_repository_name" {
+  description = "Name of the ECR repository for the opentelemetry-demo-app image"
+  type        = string
+  default     = "opentelemetry-demo-app"
+}
