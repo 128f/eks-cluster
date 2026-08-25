@@ -1,40 +1,50 @@
 # helmfile.yaml
 repositories:
-  - name: nvdp
-    url: https://nvidia.github.io/k8s-device-plugin
+  # - name: nvdp
+  #   url: https://nvidia.github.io/k8s-device-plugin
+  - name: traefik
+    url: https://traefik.github.io/charts
 
 releases:
-  # CRDs - bump `version` deliberately; CRD upgrades sometimes need manual migration
-  - name: karpenter-crd
-    namespace: karpenter
+
+  - name: traefik
+    namespace: traefik
     createNamespace: true
-    chart: oci://public.ecr.aws/karpenter/karpenter-crd
-    version: "1.6.1"
+    chart: traefik/traefik
 
-  # Controller
-  - name: karpenter
-    namespace: karpenter
-    chart: oci://public.ecr.aws/karpenter/karpenter
-    version: "1.6.1"
-    needs:
-      - karpenter/karpenter-crd
-    values:
-      - karpenter-values.yaml
 
-  - name: nvidia-device-plugin
-    namespace: kube-system
-    chart: nvdp/nvidia-device-plugin
-    values:
-      - tolerations:
-          - key: nvidia.com/gpu
-            operator: Equal
-            value: "true"
-            effect: NoSchedule
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: workload
-                      operator: In
-                      values: ["gpu"]
+
+  # # CRDs - bump `version` deliberately; CRD upgrades sometimes need manual migration
+  # - name: karpenter-crd
+  #   namespace: karpenter
+  #   createNamespace: true
+  #   chart: oci://public.ecr.aws/karpenter/karpenter-crd
+  #   version: "1.6.1"
+  #
+  # # Controller
+  # - name: karpenter
+  #   namespace: karpenter
+  #   chart: oci://public.ecr.aws/karpenter/karpenter
+  #   version: "1.6.1"
+  #   needs:
+  #     - karpenter/karpenter-crd
+  #   values:
+  #     - karpenter-values.yaml
+  #
+  # - name: nvidia-device-plugin
+  #   namespace: kube-system
+  #   chart: nvdp/nvidia-device-plugin
+  #   values:
+  #     - tolerations:
+  #         - key: nvidia.com/gpu
+  #           operator: Equal
+  #           value: "true"
+  #           effect: NoSchedule
+  #       affinity:
+  #         nodeAffinity:
+  #           requiredDuringSchedulingIgnoredDuringExecution:
+  #             nodeSelectorTerms:
+  #               - matchExpressions:
+  #                   - key: workload
+  #                     operator: In
+  #                     values: ["gpu"]
